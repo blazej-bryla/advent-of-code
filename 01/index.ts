@@ -25,13 +25,31 @@ function processFile(filePath: fs.PathOrFileDescriptor) {
     const sortedLeftList = leftList.sort((a, b) => a - b);
     const sortedRightList = rightList.sort((a, b) => a - b);
 
-    let result = 0;
+    let firstHalfResult = 0;
 
     for (let i = 0; i < sortedLeftList.length; i++) {
-      result += Math.abs(sortedLeftList[i] - sortedRightList[i]);
+      firstHalfResult += Math.abs(sortedLeftList[i] - sortedRightList[i]);
     }
 
-    console.log(result);
+    console.log("first half result:", firstHalfResult);
+
+    let temp_array = [];
+
+    for (let i = 0; i < sortedLeftList.length; i++) {
+      let counter = 0;
+      for (let j = 0; j < sortedRightList.length; j++) {
+        if (sortedLeftList[i] === sortedRightList[j]) {
+          counter++;
+        }
+      }
+      temp_array.push(sortedLeftList[i] * counter);
+
+      counter = 0;
+    }
+
+    const secondHalfResult = temp_array.reduce((a, b) => a + b, 0);
+
+    console.log("second half result:", secondHalfResult);
   });
 }
 
